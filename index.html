@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Calculator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="image/calculator_image.png" />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-black text-slate-100 min-h-screen flex items-center justify-center p-4 antialiased selection:bg-indigo-500 selection:text-white"
+  >
+    <!-- Calculator Card Container -->
+    <div
+      class="w-full max-w-sm bg-slate-800/80 backdrop-blur-xl border border-slate-700/60 rounded-3xl p-6 shadow-[0_0_50px_rgba(255,255,255,0.15)] flex flex-col gap-5 transition-all duration-300"
+    >
+      <!-- Top Bar / Brand header -->
+      <div
+        class="flex items-center justify-between px-1 text-slate-400 text-xs font-medium tracking-wider uppercase"
+      >
+        <span>Calculator</span>
+        <div class="flex gap-1.5">
+          <span
+            class="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block"
+          ></span>
+          <span
+            class="w-2.5 h-2.5 rounded-full bg-yellow-500/80 inline-block"
+          ></span>
+          <span
+            class="w-2.5 h-2.5 rounded-full bg-green-500/80 inline-block"
+          ></span>
+        </div>
+      </div>
+
+      <!-- Input Display -->
+      <div class="relative">
+        <input
+          type="text"
+          id="display"
+          readonly
+          placeholder="0"
+          class="w-full h-20 bg-slate-950/70 border border-slate-800 text-right px-5 text-3xl sm:text-4xl font-semibold tracking-wide text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-inner overflow-x-auto"
+        />
+      </div>
+
+      <!-- Keypad Grid (4 Columns Layout) -->
+      <div class="grid grid-cols-4 gap-3">
+        <!-- Row 1 -->
+        <button
+          onclick="clearDisplay()"
+          class="col-span-2 h-14 rounded-2xl bg-rose-500/15 hover:bg-rose-500/25 active:bg-rose-500/35 border border-rose-500/30 text-rose-400 font-semibold text-lg tracking-wide transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          C
+        </button>
+        <button
+          onclick="deleteLastCharacter()"
+          class="h-14 rounded-2xl bg-amber-500/15 hover:bg-amber-500/25 active:bg-amber-500/35 border border-amber-500/30 text-amber-400 font-semibold text-lg transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          ⌫
+        </button>
+        <button
+          onclick="appendToDisplay('/')"
+          class="h-14 rounded-2xl bg-indigo-600/80 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold text-xl transition-all duration-150 active:scale-95 shadow-md shadow-indigo-600/20"
+        >
+          ÷
+        </button>
+
+        <!-- Row 2 -->
+        <button
+          onclick="appendToDisplay('7')"
+          class="h-14 rounded-2xl bg-slate-700/50 hover:bg-slate-700 active:bg-slate-600 border border-slate-600/40 text-slate-100 font-medium text-xl transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          7
+        </button>
+        <button
+          onclick="appendToDisplay('8')"
+          class="h-14 rounded-2xl bg-slate-700/50 hover:bg-slate-700 active:bg-slate-600 border border-slate-600/40 text-slate-100 font-medium text-xl transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          8
+        </button>
+        <button
+          onclick="appendToDisplay('9')"
+          class="h-14 rounded-2xl bg-slate-700/50 hover:bg-slate-700 active:bg-slate-600 border border-slate-600/40 text-slate-100 font-medium text-xl transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          9
+        </button>
+        <button
+          onclick="appendToDisplay('*')"
+          class="h-14 rounded-2xl bg-indigo-600/80 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold text-xl transition-all duration-150 active:scale-95 shadow-md shadow-indigo-600/20"
+        >
+          ×
+        </button>
+
+        <!-- Row 3 -->
+        <button
+          onclick="appendToDisplay('4')"
+          class="h-14 rounded-2xl bg-slate-700/50 hover:bg-slate-700 active:bg-slate-600 border border-slate-600/40 text-slate-100 font-medium text-xl transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          4
+        </button>
+        <button
+          onclick="appendToDisplay('5')"
+          class="h-14 rounded-2xl bg-slate-700/50 hover:bg-slate-700 active:bg-slate-600 border border-slate-600/40 text-slate-100 font-medium text-xl transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          5
+        </button>
+        <button
+          onclick="appendToDisplay('6')"
+          class="h-14 rounded-2xl bg-slate-700/50 hover:bg-slate-700 active:bg-slate-600 border border-slate-600/40 text-slate-100 font-medium text-xl transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          6
+        </button>
+        <button
+          onclick="appendToDisplay('-')"
+          class="h-14 rounded-2xl bg-indigo-600/80 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold text-xl transition-all duration-150 active:scale-95 shadow-md shadow-indigo-600/20"
+        >
+          −
+        </button>
+
+        <!-- Row 4 -->
+        <button
+          onclick="appendToDisplay('1')"
+          class="h-14 rounded-2xl bg-slate-700/50 hover:bg-slate-700 active:bg-slate-600 border border-slate-600/40 text-slate-100 font-medium text-xl transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          1
+        </button>
+        <button
+          onclick="appendToDisplay('2')"
+          class="h-14 rounded-2xl bg-slate-700/50 hover:bg-slate-700 active:bg-slate-600 border border-slate-600/40 text-slate-100 font-medium text-xl transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          2
+        </button>
+        <button
+          onclick="appendToDisplay('3')"
+          class="h-14 rounded-2xl bg-slate-700/50 hover:bg-slate-700 active:bg-slate-600 border border-slate-600/40 text-slate-100 font-medium text-xl transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          3
+        </button>
+        <button
+          onclick="appendToDisplay('+')"
+          class="h-14 rounded-2xl bg-indigo-600/80 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold text-xl transition-all duration-150 active:scale-95 shadow-md shadow-indigo-600/20"
+        >
+          +
+        </button>
+
+        <!-- Row 5 -->
+        <button
+          onclick="appendToDisplay('0')"
+          class="col-span-2 h-14 rounded-2xl bg-slate-700/50 hover:bg-slate-700 active:bg-slate-600 border border-slate-600/40 text-slate-100 font-medium text-xl transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          0
+        </button>
+        <button
+          onclick="appendToDisplay('.')"
+          class="h-14 rounded-2xl bg-slate-700/50 hover:bg-slate-700 active:bg-slate-600 border border-slate-600/40 text-slate-100 font-medium text-xl transition-all duration-150 active:scale-95 shadow-sm"
+        >
+          .
+        </button>
+        <button
+          onclick="calculate()"
+          class="h-14 rounded-2xl bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 font-bold text-2xl transition-all duration-150 active:scale-95 shadow-lg shadow-emerald-500/20"
+        >
+          =
+        </button>
+      </div>
+    </div>
+
+    <!-- Original JavaScript logic preserved -->
+    <script>
+      function appendToDisplay(value) {
+        document.getElementById("display").value += value;
+      }
+
+      function clearDisplay() {
+        document.getElementById("display").value = "";
+      }
+
+      function deleteLastCharacter() {
+        const display = document.getElementById("display");
+        display.value = display.value.slice(0, -1);
+      }
+
+      function calculate() {
+        const display = document.getElementById("display");
+        try {
+          display.value = eval(display.value);
+        } catch (error) {
+          display.value = "Error";
+        }
+      }
+    </script>
+  </body>
+</html>
